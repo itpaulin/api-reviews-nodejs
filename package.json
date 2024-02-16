@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon source/server.ts",
-    "build": "rm -rf build/ && prettier --write source/ && tsc"
-},
+    "build": "rm -rf dist/ && prettier --write source/ && tsc"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itpaulin/api-reviews-nodejs.git"
+    "url": "https://github.com/itpaulin/api-reviews-nodejs.git"
   },
   "author": "Paulo Ricardo Malta",
   "license": "ISC",
@@ -27,5 +27,8 @@
     "nodemon": "^3.0.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
   }
 }
