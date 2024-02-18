@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "nodemon source/server.ts",
     "build": "rm -rf dist/ && prettier --write source/ && tsc"
   },
@@ -18,7 +19,7 @@
   },
   "homepage": "https://github.com/itpaulin/api-reviews-nodejs#readme",
   "dependencies": {
-    "@types/axios": "^0.14.0",
+    "@auth/express": "^0.5.0",
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
     "axios": "^1.6.7",
