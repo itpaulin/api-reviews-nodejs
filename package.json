@@ -19,10 +19,11 @@
   },
   "homepage": "https://github.com/itpaulin/api-reviews-nodejs#readme",
   "dependencies": {
-    "@auth/express": "^0.5.0",
+    "@prisma/client": "^5.9.1",
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
     "axios": "^1.6.7",
+    "dotenv": "^16.4.4",
     "express": "^4.18.2",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.3"
