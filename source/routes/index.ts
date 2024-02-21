@@ -1,6 +1,10 @@
-import express from 'express';
-import { router as test  } from './test'; 
+import { Router } from 'express';
+import { router as test } from './test';
+import authRoutes from './auth';
 
-export const router = require('express').Router()
+const rootRouter: Router = require('express').Router();
 
-router.use('/test', test)
+rootRouter.use('/test', test);
+rootRouter.use('/auth', authRoutes);
+
+export default rootRouter;
