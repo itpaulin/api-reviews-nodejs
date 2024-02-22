@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import rootRouter from './routes/index';
 import { PORT } from './secrets';
 import { PrismaClient } from '@prisma/client';
+import { errorMiddleware } from './middlewares/errors';
 
 const app: Express = express();
 
@@ -20,10 +21,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
 
   // Define os cabeçalhos que a API pode receber
-  res.header(
-    'Access-Control-Allow-Headers',
-    'origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
+  res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With, Content-Type, Accept, Authorization');
 
   // Se o método da requisição for 'OPTIONS', define os métodos que a API permite e retorna uma resposta vazia
   if (req.method === 'OPTIONS') {
@@ -40,15 +38,8 @@ export const prismaClient = new PrismaClient({
   log: ['query']
 });
 
-app.use((req, res, next) => {
-  const error = new Error('Not found');
-  return res.status(404).json({
-    message: error.message
-  });
-});
+app.use(errorMiddleware);
 
 const httpServer = http.createServer(app);
 const serverPort: number | string = PORT || 3000;
-httpServer.listen(serverPort, () =>
-  console.log(`Server is running on port ${serverPort}`)
-);
+httpServer.listen(serverPort, () => console.log(`Server is running on port ${serverPort}`));
