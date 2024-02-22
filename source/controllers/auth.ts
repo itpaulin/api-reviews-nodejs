@@ -3,6 +3,8 @@ import { prismaClient } from '..';
 import { hashSync, compareSync } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../secrets';
+import { BadRequestException } from '../exceptions/bad-request';
+import { ErrorCode } from '../exceptions/root';
 
 export const signup = async (req: Request, res: Response) => {
   const { email, name, password, photoUrl } = req.body;
@@ -10,7 +12,7 @@ export const signup = async (req: Request, res: Response) => {
   let user = await prismaClient.user.findFirst({ where: { email } });
 
   if (user) {
-    throw Error('user already exists.');
+    throw new BadRequestException('User already exist.', ErrorCode.USER_ALREADY_EXISTS);
   }
 
   user = await prismaClient.user.create({
@@ -47,4 +49,5 @@ export const login = async (req: Request, res: Response) => {
 
   res.json({ user, token });
 };
-// roles "user", "moderator" and "admin",
+
+// * roles "user", "moderator" and "admin",
