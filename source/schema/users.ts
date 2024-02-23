@@ -19,5 +19,5 @@ export const SignUpSchema = z.object({
       }
     ),
   // ! Create ENUM files respecting design system
-  role: z.enum(Roles)
+  role: z.enum(Roles).optional()
 });
