@@ -6,6 +6,7 @@ import { JWT_SECRET } from '../secrets';
 import { BadRequestException } from '../exceptions/bad-request';
 import { ErrorCode } from '../exceptions/root';
 import { SignUpSchema } from '../schema/users';
+import { NotFoundException } from '../exceptions/not-found';
 
 export const signup = async (req: Request, res: Response, next: NextFunction) => {
   SignUpSchema.parse(req.body);
@@ -35,10 +36,10 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   let user = await prismaClient.user.findFirst({ where: { email } });
 
   if (!user) {
-    return next(new BadRequestException('Does not find user.', ErrorCode.USER_NOT_FOUND));
+    throw new NotFoundException('Not find user.', ErrorCode.USER_NOT_FOUND);
   } else {
     if (!compareSync(password, user.password)) {
-      return next(new BadRequestException('Password Wrong.', ErrorCode.INCORRECT_PASSWORD));
+      throw new BadRequestException('Password Wrong.', ErrorCode.INCORRECT_PASSWORD);
     }
   }
 
