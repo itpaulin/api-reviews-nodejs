@@ -4,7 +4,6 @@ import { ErrorCode } from '../exceptions/root';
 import * as jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../secrets';
 import { prismaClient } from '..';
-import { User } from '@prisma/client';
 
 interface IPayload extends jwt.JwtPayload {
   userId: number;
@@ -18,13 +17,14 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
   }
   try {
     const payload = jwt.verify(token!, JWT_SECRET) as IPayload;
-    const user = await prismaClient.user.findFirst({ where: { id: payload.userId } });
-    if (user) {
-      req.user = user;
+    const user = await prismaClient.user.findUnique({ where: { id: payload.userId } });
+    if (!user) {
+      return next(new UnauthorizedException('Usuário não encontrado', ErrorCode.USER_NOT_FOUND));
     }
+    req.user = user;
     next();
   } catch (err) {
-    next(new UnauthorizedException('Unauthorized', ErrorCode.UNAUNTHORIZED));
+    return next(new UnauthorizedException('Invalid Token', ErrorCode.UNAUNTHORIZED));
   }
 };
 export default authMiddleware;

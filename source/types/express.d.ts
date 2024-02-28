@@ -1,7 +1,9 @@
-import { User } from '@prisma/client';
-import express from 'express';
+// custom.d.ts
+
+import { User } from '@prisma/client'; // Importe o tipo do seu modelo de usuário
+
 declare module 'express' {
-  export interface Request {
-    user?: User;
+  interface Request {
+    user?: User; // Adicione a definição da propriedade user
   }
 }

@@ -56,5 +56,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 // * roles "user", "moderator" and "admin",
 
 export const me = async (req: Request, res: Response, next: NextFunction) => {
-  res.json(req.user);
+  const user = req.user;
+  res.send({ user });
 };
