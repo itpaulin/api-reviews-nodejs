@@ -4,13 +4,12 @@ import { ErrorCode } from '../exceptions/root';
 import * as jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../secrets';
 import { prismaClient } from '..';
-import { AuthenticatedRequest } from '../../types';
 
 interface IPayload extends jwt.JwtPayload {
   userId: number;
 }
 
-const authMiddleware = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization;
 
   if (!token) {
