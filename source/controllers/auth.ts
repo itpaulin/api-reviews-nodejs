@@ -7,6 +7,7 @@ import { BadRequestException } from '../exceptions/bad-request';
 import { ErrorCode } from '../exceptions/root';
 import { SignUpSchema } from '../schema/users';
 import { NotFoundException } from '../exceptions/not-found';
+import { AuthenticatedRequest } from '../../types';
 
 export const signup = async (req: Request, res: Response, next: NextFunction) => {
   SignUpSchema.parse(req.body);
@@ -55,7 +56,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 };
 // * roles "user", "moderator" and "admin",
 
-export const me = async (req: Request, res: Response, next: NextFunction) => {
-  const user = req.user;
-  res.send({ user });
+export const me = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  res.json(req.user);
 };
